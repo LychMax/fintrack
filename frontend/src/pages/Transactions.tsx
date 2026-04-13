@@ -280,10 +280,7 @@ export default function Transactions() {
                         </span>
                       </td>
                       <td className="px-5 py-4 text-sm font-bold whitespace-nowrap" style={{ color }}>
-                        {sign} {t.amount.toLocaleString("ru-RU", { minimumFractionDigits: 2 })}
-                      </td>
-                      <td className="px-5 py-4 text-sm text-muted-foreground">
-                        {t.currency} {txSymbol}
+                        {sign} {t.amount.toLocaleString("ru-RU", { minimumFractionDigits: 2 })} {txSymbol}
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-1">
