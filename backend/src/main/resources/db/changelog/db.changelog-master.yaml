@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file: changes/001-initial-schema.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/002-add-email-column.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/003-update-transaction-date-to-timestamp.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/004-add-currency-support.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/005-add-budgets.yaml
+      relativeToChangelogFile: true

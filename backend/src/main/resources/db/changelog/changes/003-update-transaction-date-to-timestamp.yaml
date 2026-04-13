@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: lych
+      changes:
+        - modifyDataType:
+            tableName: transactions
+            columnName: transaction_date
+            newDataType: timestamp
+        - sql:
+            sql: |
+              UPDATE transactions 
+              SET transaction_date = transaction_date::timestamp 
+              WHERE transaction_date IS NOT NULL;

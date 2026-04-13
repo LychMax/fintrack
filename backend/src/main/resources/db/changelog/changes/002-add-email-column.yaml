@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: lych
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  type: varchar(100)
+
+        - sql:
+            sql: UPDATE public.users SET email = username WHERE email IS NULL;
+
+        - addNotNullConstraint:
+            tableName: users
+            columnName: email
+            columnDataType: varchar(100)
+
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: email
+            constraintName: uk_user_email

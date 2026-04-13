@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: lych
+      changes:
+        - createTable:
+            tableName: budgets
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_budget_user
+                    references: users(id)
+                    deleteCascade: true
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_budget_category
+                    references: categories(id)
+                    deleteCascade: true
+              - column:
+                  name: amount
+                  type: decimal(15,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: period_type
+                  type: varchar(10)
+                  defaultValue: 'MONTHLY'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: varchar(10)
+                  defaultValue: 'BYN'
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: budgets
+            columnNames: user_id, category_id, period_type
+            constraintName: uk_budget_user_category_period

@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: lych
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: main_currency
+                  type: varchar(10)
+                  defaultValue: 'BYN'
+                  constraints:
+                    nullable: false
+
+        - addColumn:
+            tableName: transactions
+            columns:
+              - column:
+                  name: currency
+                  type: varchar(10)
+                  defaultValue: 'BYN'
+                  constraints:
+                    nullable: false
+
+        - sql:
+            sql: |
+              UPDATE users SET main_currency = 'BYN' WHERE main_currency IS NULL;
+              UPDATE transactions SET currency = 'BYN' WHERE currency IS NULL;

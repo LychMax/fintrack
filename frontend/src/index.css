@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: #0f172a;
+    --foreground: #e2e8f0;
+    --card: #1e293b;
+    --card-foreground: #e2e8f0;
+    --primary: #EC4899;
+    --primary-foreground: #ffffff;
+    --secondary: #A855F7;
+    --accent: #6366F1;
+    --muted: #1e293b;
+    --muted-foreground: #64748b;
+    --border: #334155;
+    --destructive: #ef4444;
+    --glass: rgba(30, 41, 59, 0.6);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 85% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.4);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.7);
+  }
+
+  /* Input date color fix */
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.7);
+    cursor: pointer;
+  }
+
+  /* Select options */
+  select option {
+    background: #1e293b;
+    color: #e2e8f0;
+  }
+}
+
+@layer utilities {
+  .bg-background { background-color: var(--background); }
+  .bg-card { background-color: var(--card); }
+  .text-foreground { color: var(--foreground); }
+  .text-muted-foreground { color: var(--muted-foreground); }
+  .text-primary { color: var(--primary); }
+  .border-border { border-color: var(--border); }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #EC4899, #A855F7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: 1rem;
+  }
+
+  .gradient-button {
+    background: linear-gradient(135deg, #EC4899, #A855F7);
+    color: white;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.5rem;
+    transition: opacity 0.2s;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+  }
+
+  .gradient-button:hover {
+    opacity: 0.9;
+  }
+}
