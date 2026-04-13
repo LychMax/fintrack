@@ -34,13 +34,13 @@ export default function Register() {
   const onSubmit = async (data: FormData) => {
     setServerError("");
     try {
-      await api.post("/auth/register", {
+      await api.post("auth/register", {
         username: data.username,
         email: data.email,
         password: data.password,
       });
       // Auto-login
-      const res = await api.post("/auth/login", {
+      const res = await api.post("auth/login", {
         login: data.username,
         password: data.password,
       });
