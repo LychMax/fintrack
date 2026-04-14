@@ -8,7 +8,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Currency, CurrencyLabel } from "@/types";
 import {
   User,
-  Mail,
   Lock,
   Wallet,
   Save,
