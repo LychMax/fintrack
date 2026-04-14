@@ -11,7 +11,7 @@ export default function AuthToast() {
 
       setTimeout(() => {
         setVisible(false);
-      }, 3000);
+      }, 6000);
     };
 
     window.addEventListener("auth-error", handler as EventListener);
