@@ -36,7 +36,6 @@ export default function AuthToast() {
           </p>
         </div>
 
-        {/* Кнопка закрытия */}
         <button 
           onClick={() => setVisible(false)}
           className="text-slate-400 hover:text-white text-2xl leading-none mt-0.5 transition-colors"
