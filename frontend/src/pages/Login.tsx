@@ -92,7 +92,7 @@ export default function Login() {
               <label className="block text-sm font-medium text-slate-300 mb-2">Логин или Email</label>
               <input
                 {...register("login")}
-                placeholder="login или email@example.com"
+                placeholder="Login или email@example.com"
                 className="w-full px-4 py-3 rounded-xl text-foreground placeholder-slate-500 outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 style={{ background: "rgba(30,41,59,0.8)", border: "1px solid rgba(51,65,85,0.8)" }}
               />
