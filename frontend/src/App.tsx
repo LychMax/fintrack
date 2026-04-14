@@ -33,6 +33,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <AuthToast />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -44,12 +45,9 @@ function App() {
           <Route path="/budgets" element={<ProtectedRoute><Budgets /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
-          {/* Неизвестные маршруты → на главную */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 
-        {/* Глобальное уведомление при выкидывании сессии */}
-        <AuthToast />
       </BrowserRouter>
     </QueryClientProvider>
   );
