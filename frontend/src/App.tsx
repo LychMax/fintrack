@@ -1,63 +1,49 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "@/store/useAuthStore";
-
-import Layout from "@/components/Layout";        // или "@/Layout" — смотри свой импорт
+import Layout from "@/components/Layout";
 import Dashboard from "@/pages/Dashboard";
 import Transactions from "@/pages/Transactions";
+import Categories from "@/pages/Categories";
 import Reports from "@/pages/Reports";
 import Budgets from "@/pages/Budgets";
-import Categories from "@/pages/Categories";
 import Profile from "@/pages/Profile";
-
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import { JSX } from "react";
 
-import AuthToast from "@/components/AuthToast";
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: 30_000,
+    },
+  },
+});
+
+function ProtectedRoute({ children }: { children: JSX.Element }) {
+  const isAuth = useAuthStore((s) => s.isAuthenticated());
+  return isAuth ? <Layout>{children}</Layout> : <Navigate to="/login" replace />;
+}
 
 function App() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
-
   return (
-    <Router>
-      <Routes>
-        {/* Публичные страницы */}
-        <Route 
-          path="/login" 
-          element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} 
-        />
-        <Route 
-          path="/register" 
-          element={isAuthenticated ? <Navigate to="/" replace /> : <Register />} 
-        />
-
-        {/* Защищённые страницы с Layout */}
-        <Route
-          path="/*"
-          element={
-            isAuthenticated ? (
-              <Layout>
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/transactions" element={<Transactions />} />
-                  <Route path="/reports" element={<Reports />} />
-                  <Route path="/budgets" element={<Budgets />} />
-                  <Route path="/categories" element={<Categories />} />
-                  <Route path="/profile" element={<Profile />} />
-                  
-                  {/* Любые неизвестные маршруты внутри приложения → на главную */}
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-              </Layout>
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-      </Routes>
-
-      {/* Глобальное уведомление */}
-      <AuthToast />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
+          <Route path="/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+          <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+          <Route path="/budgets" element={<ProtectedRoute><Budgets /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
