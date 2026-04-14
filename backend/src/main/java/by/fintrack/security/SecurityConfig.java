@@ -71,7 +71,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
-                "https://fintrack-web.pages.dev",
+                "https://front-fintrack.vercel.app",
                 "http://localhost:5173",
                 "http://localhost:3000"
         ));
