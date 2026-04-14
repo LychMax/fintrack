@@ -45,5 +45,11 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        userService.logout();
+        return ResponseEntity.ok().build();
+    }
+
     private record JwtResponse(String token) {}
 }

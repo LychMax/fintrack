@@ -28,4 +28,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Currency mainCurrency = Currency.BYN;
+
+    @Column(name = "token_version", nullable = false)
+    private Long tokenVersion = 0L;
 }

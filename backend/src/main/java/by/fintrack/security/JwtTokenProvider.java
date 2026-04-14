@@ -36,13 +36,15 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
 
         User user = userRepository.findByUsername(username).orElse(null);
+        Long tokenVersion = (user != null) ? user.getTokenVersion() : 0L;
 
         String currencyName = (user != null) ? user.getMainCurrency().name() : "BYN";
-        String emailValue   = (user != null) ? user.getEmail() : "";
+        String emailValue = (user != null) ? user.getEmail() : "";
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -56,6 +58,7 @@ public class JwtTokenProvider {
                 .claim("email", emailValue)
                 .claim("roles", authorities)
                 .claim("mainCurrency", currencyName)
+                .claim("tokenVersion", tokenVersion)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(getSigningKey())
@@ -71,6 +74,7 @@ public class JwtTokenProvider {
                 .claim("email", user.getEmail())
                 .claim("mainCurrency", user.getMainCurrency().name())
                 .claim("roles", "ROLE_USER")
+                .claim("tokenVersion", user.getTokenVersion())
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(getSigningKey())
@@ -79,10 +83,24 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser()
+            Claims claims = Jwts.parser()
                     .verifyWith(getSigningKey())
                     .build()
-                    .parseSignedClaims(token);
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+            Long tokenVersionClaim = claims.get("tokenVersion", Long.class);
+            if (tokenVersionClaim == null) {
+                return false;
+            }
+
+            String username = claims.getSubject();
+            User user = userRepository.findByUsername(username).orElse(null);
+
+            if (user == null || !user.getTokenVersion().equals(tokenVersionClaim)) {
+                return false;
+            }
+
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;

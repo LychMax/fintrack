@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: lych
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: token_version
+                  type: bigint
+                  defaultValue: 0
+                  constraints:
+                    nullable: false

@@ -57,11 +57,15 @@ public class UserServiceImpl implements UserService {
                 .or(() -> userRepository.findByEmail(dto.getLogin()))
                 .orElseThrow(() -> new BadCredentialsException("Неверный логин или пароль"));
 
+        user.setTokenVersion(user.getTokenVersion() + 1);
+        userRepository.save(user);
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), dto.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return tokenProvider.generateToken(authentication);
     }
 
@@ -121,6 +125,14 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void logout() {
+        User user = getCurrentUser();
+        user.setTokenVersion(user.getTokenVersion() + 1);
         userRepository.save(user);
     }
 

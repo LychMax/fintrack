@@ -20,4 +20,6 @@ public interface UserService {
     UserDto updateProfile(UpdateProfileDto dto);
 
     void changePassword(ChangePasswordDto dto);
+
+    void logout();
 }
