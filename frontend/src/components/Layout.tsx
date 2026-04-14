@@ -41,7 +41,6 @@ const handleLogout = async () => {
     console.error("Logout error", e);
   }
 
-  // Очищаем стор и переходим на логин
   setToken(null);
   navigate("/login");
 };
