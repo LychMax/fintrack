@@ -29,16 +29,28 @@
     font-family: 'Inter', -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Запрет горизонтального скролла */
+    overflow-x: hidden;
+    /* Корректный размер текста на iOS */
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
     min-height: 100vh;
+    min-height: 100dvh;
+    /* Запрет горизонтального скролла */
+    overflow-x: hidden;
     background-image:
       radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
       radial-gradient(circle at 85% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 40%);
     background-attachment: fixed;
+  }
+
+  /* Нативный скролл на мобильных */
+  * {
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Custom scrollbar */
@@ -57,17 +69,31 @@
     background: rgba(100, 116, 139, 0.7);
   }
 
-  /* Input date color fix */
+  /* Input date/datetime color fix */
   input[type="date"]::-webkit-calendar-picker-indicator,
   input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     filter: invert(0.7);
     cursor: pointer;
   }
 
+  /* iOS: убрать нативный стиль инпутов */
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
   /* Select options */
   select option {
     background: #1e293b;
     color: #e2e8f0;
+  }
+
+  /* Tap highlight на мобильных */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -105,5 +131,13 @@
 
   .gradient-button:hover {
     opacity: 0.9;
+  }
+
+  /* Safe area для iPhone с чёлкой */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
   }
 }
