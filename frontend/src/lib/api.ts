@@ -17,12 +17,29 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const path = error.config?.url || "";
-      if (!path.includes("/auth/login") && !path.includes("/auth/register") && !path.includes("/profile/password")) {
-        useAuthStore.getState().setToken(null);
-        window.location.href = "/login";
+      const url = error.config?.url || "";
+
+      if (url.includes("/auth/login") || 
+          url.includes("/auth/register") || 
+          url.includes("/auth/logout")) {
+        return Promise.reject(error);
       }
+
+      useAuthStore.getState().setToken(null);
+
+      const event = new CustomEvent("auth-error", {
+        detail: {
+          message: "Вы вошли в аккаунт с другого устройства",
+          type: "session-expired"
+        }
+      });
+      window.dispatchEvent(event);
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 800);
     }
+
     return Promise.reject(error);
   }
 );
