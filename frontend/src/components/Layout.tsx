@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Currency, CurrencySymbol } from "@/types";
+import api from "@/lib/api";
 
 const navItems = [
   { to: "/", icon: LayoutDashboard, label: "Главная" },
@@ -33,11 +34,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const avatarLetter = (username || "U").charAt(0).toUpperCase();
   const symbol = CurrencySymbol[mainCurrency as Currency] || "Br";
 
-  const handleLogout = () => {
-    setToken(null);
-    navigate("/login");
-  };
+const handleLogout = async () => {
+  try {
+    await api.post("/auth/logout");
+  } catch (e) {
+    console.error("Logout error", e);
+  }
 
+  // Очищаем стор и переходим на логин
+  setToken(null);
+  navigate("/login");
+};
   const SidebarInner = ({ onNavClick }: { onNavClick?: () => void }) => (
     <>
       {/* Logo */}
