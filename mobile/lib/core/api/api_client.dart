@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/features/auth/presentation/providers/auth_provider.dart';
 
-const String _baseUrl = 'https://fintrack-server.up.railway.app';
+const String _baseUrl = 'https://151.101.2.15';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
