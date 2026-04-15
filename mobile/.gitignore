@@ -1,0 +1,41 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+*.iml
+*.lock
+
+# Android
+android/.gradle/
+android/captures/
+android/local.properties
+android/key.properties
+
+# iOS
+ios/.symlinks/
+ios/Pods/
+ios/Podfile.lock
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/flutter_export_environment.sh
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Generated files
+lib/generated/
