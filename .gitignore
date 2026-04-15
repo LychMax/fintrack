@@ -3,6 +3,7 @@ mobile/build/
 mobile/.dart_tool/
 mobile/.flutter-plugins*
 mobile/.metadata
+mobile/pubspec.lock
 
 # Builds
 *.apk
@@ -16,6 +17,10 @@ Releases/
 # IDE
 .vscode/
 .idea/
+*.iml
 
 # Logs
 *.log
+
+# Temporary
+docker-compose.yml
