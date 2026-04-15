@@ -73,7 +73,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "https://front-fintrack.vercel.app",
                 "http://localhost:5173",
-                "http://localhost:3000"
+                "http://localhost:3000",
+                "*"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
